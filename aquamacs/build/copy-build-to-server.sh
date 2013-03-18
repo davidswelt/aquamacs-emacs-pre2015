@@ -13,7 +13,7 @@ CHGLOGSCRIPT=~/aquamacs-web/scripts/push-nightly-changelog.sh
 SOURCE=`pwd`/builds
 LOGPATH=`pwd`
 
-DEST=dr@cc:Sites/Aquamacs
+DEST=dreitter@cc:Sites/Aquamacs
 
 TMP=/tmp/builds
 
