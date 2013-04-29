@@ -104,7 +104,7 @@ Lisp_Object Fx_open_connection (Lisp_Object, Lisp_Object, Lisp_Object);
 extern BOOL ns_in_resize;
 
 /* Static variables to handle applescript execution.  */
-static NSString *as_script;
+static NSString *as_script = nil;
 static Lisp_Object *as_result;
 static int as_status;
 
@@ -2710,7 +2710,7 @@ In case the execution fails, an error is signaled. */)
 
   status = as_status;
   as_status = 0;
-  as_script = Qnil;
+  as_script = nil;
   as_result = 0;
 
   UNGCPRO;
@@ -3613,8 +3613,10 @@ be used as the image of the icon representing the frame.  */);
   check_window_system_func = check_ns;
 
   as_status = 0;
-  as_script = Qnil;
+  as_script = nil;
   as_result = 0;
+
+  staticpro(&as_result);
 }
 
 // arch-tag: dc2a3f74-1123-4daa-8eed-fb78db6a5642
