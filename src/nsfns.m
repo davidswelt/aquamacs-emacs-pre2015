@@ -96,7 +96,7 @@ static Lisp_Object Vns_icon_type_alist;
 /* Toolkit version support. */
 static Lisp_Object Vns_version_string;
 
-EmacsTooltip *ns_tooltip;
+EmacsTooltip *ns_tooltip = nil;
 
 /* Need forward declaration here to preserve organizational integrity of file */
 Lisp_Object Fx_open_connection (Lisp_Object, Lisp_Object, Lisp_Object);
