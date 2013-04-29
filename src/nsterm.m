@@ -141,6 +141,9 @@ static unsigned convert_ns_to_X_keysym[] =
   0x1B,				0x1B   /* escape */
 };
 
+/* Temporary frame list */
+
+static Lisp_Object temp_frame_list;
 
 /* Lisp communications */
 Lisp_Object ns_spelling_text;
@@ -933,7 +936,9 @@ ns_set_terminal_modes (struct terminal *terminal)
 Lisp_Object
 ns_frame_list ()
 {
-  Lisp_Object frame, tail, frame_list = Qnil;
+  Lisp_Object frame, tail;
+
+  temp_frame_list = Qnil;  // temp_frame_list is staticpro'd
 
   NSEnumerator *e = [[NSApp orderedWindows] reverseObjectEnumerator];
   NSWindow *win;
@@ -952,7 +957,7 @@ ns_frame_list ()
 	message1("ns_frame_list: window in NS window list is an EmacsWindow without valid frame.\n");
 	continue;
       }
-    frame_list = Fcons (frame, frame_list);
+    temp_frame_list = Fcons (frame, temp_frame_list);
   }
   /* go through Vframe_list and add any missing frames */
   for (tail = Vframe_list; CONSP (tail); tail = XCDR (tail))
@@ -960,10 +965,10 @@ ns_frame_list ()
       frame = XCAR (tail);
       if (! FRAMEP (frame))
 	continue;
-      if (NILP (Fmemq (frame, frame_list)))
-	frame_list = Fcons (frame, frame_list);
+      if (NILP (Fmemq (frame, temp_frame_list)))
+	temp_frame_list = Fcons (frame, temp_frame_list);
     }
-  return frame_list;
+  return temp_frame_list;
 }
 
 
@@ -6398,15 +6403,21 @@ typedef NSUInteger NSApplicationPresentationOptions;
     int newcols = FRAME_PIXEL_WIDTH_TO_TEXT_COLS(emacsframe, r.size.width);
     int newrows = FRAME_PIXEL_HEIGHT_TO_TEXT_LINES(emacsframe, r.size.height);
 
-    change_frame_size (emacsframe, newrows, newcols, 0, 1, 0); /* pretend, delay, safe */
+    x_set_window_size (emacsframe, 0, newcols, newrows);
+
+    /*  (x_set_window_size does all of these things and more.  calling it
+	prevents severe scrolling redisplay issues.)
+    change_frame_size (emacsframe, newrows, newcols, 0, 1, 0); 
     FRAME_PIXEL_WIDTH (emacsframe) = (int)r.size.width;
     FRAME_PIXEL_HEIGHT (emacsframe) = (int)r.size.height;
 
     emacsframe->border_width = [window frame].size.width - r.size.width;
     FRAME_NS_TITLEBAR_HEIGHT (emacsframe) =
         [window frame].size.height - r.size.height;
+    */
 
     [[window delegate] windowDidMove:nil];
+
 }
 
 - (void)drawRect: (NSRect)rect
@@ -6743,7 +6754,8 @@ enum {
 }
 
 
-
+/* NOTE: this is not the new, native fullscreen.  Only called for
+   non-OS-level fullscreen.  Deprecated.  */
 -(EmacsWindow *)setFullscreen:(BOOL) flag {
   BOOL isFullscreen = [[self className] isEqualToString:@"EmacsFullWindow"];
   EmacsFullWindow *f;
@@ -7547,6 +7559,10 @@ application launches.  */);
 command keys to emulate right and middle mouse
 buttons on a one-button mouse.  */);
   ns_emulate_three_button_mouse = Qt;
+
+
+  staticpro (&temp_frame_list);
+  temp_frame_list = Qnil;
 
   staticpro (&ns_display_name_list);
   ns_display_name_list = Qnil;
