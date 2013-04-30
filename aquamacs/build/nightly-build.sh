@@ -56,7 +56,7 @@ tar cjf ${BLD} Aquamacs.app ; \
 cd ${EMACS_ROOT} ; \
 aquamacs/build/copy-build-to-server.sh $DATE # $SHORTDATE  - only needed for GNU Emacs
 
-echo "Archiving symbol table into ${BRANCH}-${DATE}"
-mkdir ${DSYM_ROOT}/${BRANCH}-${DATE}
-mv src/emacs.dSYM ${DSYM_ROOT}/${BRANCH}-${DATE}/
-cp src/emacs ${DSYM_ROOT}/${BRANCH}-${DATE}/
+# echo "Archiving symbol table into ${BRANCH}-${DATE}"
+# mkdir ${DSYM_ROOT}/${BRANCH}-${DATE}
+# mv src/emacs.dSYM ${DSYM_ROOT}/${BRANCH}-${DATE}/
+# cp src/emacs ${DSYM_ROOT}/${BRANCH}-${DATE}/
