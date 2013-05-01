@@ -229,7 +229,7 @@ ns_get_screen (Lisp_Object screen)
   else
     {
       struct ns_display_info *dpyinfo = terminal->display_info.ns;
-      f = dpyinfo->x_focus_frame 
+      f = dpyinfo->x_focus_frame
         ? dpyinfo->x_focus_frame : dpyinfo->x_highlight_frame;
     }
 
@@ -504,7 +504,7 @@ ns_set_name_internal (FRAME_PTR f, Lisp_Object name)
   if (!STRINGP (f->icon_name))
     encoded_icon_name = encoded_name;
   else
-    encoded_icon_name = ENCODE_UTF_8 (f->icon_name);    
+    encoded_icon_name = ENCODE_UTF_8 (f->icon_name);
 
   str = [NSString stringWithUTF8String: SDATA (encoded_icon_name)];
 
@@ -658,7 +658,7 @@ ns_set_name_as_filename (struct frame *f)
 
   if (FRAME_ICONIFIED_P (f))
     [[view window] setMiniwindowTitle: str];
-  else 
+  else
     {
       NSString *fstr;
 
@@ -774,7 +774,7 @@ ns_implicitly_set_icon_type (struct frame *f)
 {
   Lisp_Object tem;
   EmacsView *view = FRAME_NS_VIEW (f);
-  id image =nil;
+  id image = nil;
   Lisp_Object chain, elt;
   NSAutoreleasePool *pool;
   BOOL setMini = YES;
@@ -1006,10 +1006,10 @@ frame_parm_handler ns_frame_parm_handlers[] =
   x_set_fringe_width, /* generic OK */
   x_set_fringe_width, /* generic OK */
   0, /* x_set_wait_for_wm, will ignore */
-  x_set_fullscreen,  /* generic OK */
+  x_set_fullscreen, /* generic OK */
   x_set_font_backend, /* generic OK */
   x_set_alpha,
-  0, /* x_set_sticky */  
+  0, /* x_set_sticky */
 };
 
 
@@ -1283,7 +1283,7 @@ be shared by the new frame.  */)
   x_default_parameter (f, parms, Qscroll_bar_width, Qnil, "scrollBarWidth",
                       "ScrollBarWidth", RES_TYPE_NUMBER);
   x_default_parameter (f, parms, Qalpha, Qnil, "alpha", "Alpha",
-                      RES_TYPE_NUMBER);
+                       RES_TYPE_NUMBER);
 
   width = FRAME_COLS (f);
   height = FRAME_LINES (f);
@@ -1308,7 +1308,7 @@ be shared by the new frame.  */)
 	}
       else
 	  f->async_visible = 0;
-    }
+        }
 
   if (FRAME_HAS_MINIBUF_P (f)
       && (!FRAMEP (kb->Vdefault_minibuffer_frame)
@@ -1390,7 +1390,7 @@ DEFUN ("ns-frame-is-on-active-space-p", Fns_frame_is_on_active_space_p, Sns_fram
        0, 1, 0,
        doc: /* Return non-nil if FRAME is on active space.
 OS X 10.6 only; returns non-nil prior to 10.5 or for non-NS frames.*/)
-     (frame)
+  (frame)
      Lisp_Object frame;
 {
   struct frame *f;
@@ -1993,7 +1993,7 @@ when `ns-popup-save-panel' was called.
 		    contextInfo:current_buffer];
   
   ns_update_menubar (SELECTED_FRAME (), 0, nil);
-
+ 
   [panel release];
  
   /* make stick */
@@ -2067,7 +2067,7 @@ Optional arg INIT, if non-nil, provides a default file name to use.  */)
 
   ret = (ret == NSOKButton) || panelOK;
 
-  if (ret)
+  if (ret) 
     fname = build_string ([[panel filename] UTF8String]);
 
   [[FRAME_NS_VIEW (SELECTED_FRAME ()) window] makeKeyWindow];
@@ -2424,7 +2424,7 @@ DEFUN ("ns-emacs-info-panel", Fns_emacs_info_panel, Sns_emacs_info_panel,
 
 
 DEFUN ("ns-font-name", Fns_font_name, Sns_font_name, 1, 1, 0,
-       doc: /* Determine font postscript or family name for font NAME.
+       doc: /* Determine font PostScript or family name for font NAME.
 NAME should be a string containing either the font name or an XLFD
 font descriptor.  If string contains `fontset' and not
 `fontset-startup', it is left alone. */)
@@ -2508,24 +2508,24 @@ DEFUN ("ns-list-services", Fns_list_services, Sns_list_services, 0, 0, 0,
 #ifdef NS_IMPL_COCOA
   if (NSAppKitVersionNumber >= 744.0)
     {
-      delegate = [svcs delegate];
-      if (delegate != nil)
+  delegate = [svcs delegate];
+  if (delegate != nil)
+    {
+      if ([delegate respondsToSelector: @selector (menuNeedsUpdate:)])
+        [delegate menuNeedsUpdate: svcs];
+      if ([delegate respondsToSelector:
+                       @selector (menu:updateItem:atIndex:shouldCancel:)])
         {
-          if ([delegate respondsToSelector: @selector (menuNeedsUpdate:)])
-              [delegate menuNeedsUpdate: svcs];
-          if ([delegate respondsToSelector:
-                            @selector (menu:updateItem:atIndex:shouldCancel:)])
-            {
-              int i, len = [delegate numberOfItemsInMenu: svcs];
-              for (i =0; i<len; i++)
-                  [svcs addItemWithTitle: @"" action: NULL keyEquivalent: @""];
-              for (i =0; i<len; i++)
-                  if (![delegate menu: svcs
-                           updateItem: (NSMenuItem *)[svcs itemAtIndex: i]
-                              atIndex: i shouldCancel: NO])
-                    break;
-            }
+          int i, len = [delegate numberOfItemsInMenu: svcs];
+          for (i =0; i<len; i++)
+            [svcs addItemWithTitle: @"" action: NULL keyEquivalent: @""];
+          for (i =0; i<len; i++)
+            if (![delegate menu: svcs
+                     updateItem: (NSMenuItem *)[svcs itemAtIndex: i]
+                        atIndex: i shouldCancel: NO])
+              break;
         }
+    }
     }
 #endif
 
@@ -2662,7 +2662,7 @@ ns_do_applescript (NSString* script, Lisp_Object *result)
 void
 ns_run_ascript (void)
 {
-  as_status = ns_do_applescript (as_script, as_result);
+    as_status = ns_do_applescript (as_script, as_result);
 }
 
 DEFUN ("ns-do-applescript", Fns_do_applescript, Sns_do_applescript, 1, 1, 0,
@@ -2691,6 +2691,16 @@ In case the execution fails, an error is signaled. */)
 
   as_result = &result;
 
+  NSWindow *win = [NSApp mainWindow];
+  if (win == nil)
+  {
+    // if application hidden, try to get the first of all windows
+    NSArray *a = [NSApp windows];
+    if ([a count]>0)
+      {
+	win = [a objectAtIndex:0];
+      }
+  }
   /* executing apple script requires the event loop to run, otherwise
      errors aren't returned and executeAndReturnError hangs forever.
      Post an event that runs applescript and then start the event loop.
@@ -2699,15 +2709,15 @@ In case the execution fails, an error is signaled. */)
                             location: NSMakePoint (0, 0)
                        modifierFlags: 0
                            timestamp: 0
-                        windowNumber: [[NSApp mainWindow] windowNumber]
+                        windowNumber: [win windowNumber]
                              context: [NSApp context]
                              subtype: 0
                                data1: 0
                                data2: NSAPP_DATA2_RUNASSCRIPT];
 
   [NSApp postEvent: nxev atStart: NO];
-  [NSApp run];
-
+    [NSApp run];
+  
   status = as_status;
   as_status = 0;
   as_script = nil;
@@ -2888,8 +2898,8 @@ DEFUN ("ns-launch-URL-with-default-browser", Fns_launch_url_with_default_browser
 Lisp_Object URLstring;
 {
 	check_ns();
-	CHECK_STRING (URLstring);
-	if (NILP (URLstring))
+  CHECK_STRING (URLstring);
+  if (NILP (URLstring))
     {
 		error ("URL is nil.");
 		return Qnil;
@@ -3286,9 +3296,9 @@ compute_tip_xy (f, parms, dx, dy, width, height, root_x, root_y)
   else
     pt.y = last_mouse_motion_position.y;
 
-  /* Convert to screen coordinates */
-  pt = [view convertPoint: pt toView: nil];
-  pt = [[view window] convertBaseToScreen: pt];
+      /* Convert to screen coordinates */
+      pt = [view convertPoint: pt toView: nil];
+      pt = [[view window] convertBaseToScreen: pt];
 
   vScreen = [[[view window] screen] visibleFrame];
 
@@ -3316,8 +3326,8 @@ compute_tip_xy (f, parms, dx, dy, width, height, root_x, root_y)
       *root_y = pt.y + XINT (dy);
   else
     /* Put it on the top.  */
-    *root_y = vScreen.origin.y + vScreen.size.height - height;
-}
+	*root_y = vScreen.origin.y + vScreen.size.height - height;
+    }
 
 
 DEFUN ("x-show-tip", Fx_show_tip, Sx_show_tip, 1, 6, 0,
@@ -3374,7 +3384,7 @@ Text larger than the specified size is clipped.  */)
   else
     CHECK_NUMBER (dy);
 
-  if (strlen (str) > 0)
+ if (strlen (str) > 0)
     {
   BLOCK_INPUT;
       if (ns_tooltip)

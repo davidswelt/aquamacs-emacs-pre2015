@@ -235,7 +235,7 @@ static Lisp_Object last_mouse_motion_frame;
 static EmacsScroller *last_mouse_scroll_bar = nil;
 static struct frame *ns_updating_frame;
 static NSView *focus_view = NULL;
-static int ns_window_num =0;
+static int ns_window_num = 0;
 #ifdef NS_IMPL_GNUSTEP
 static NSRect uRect;
 #endif
@@ -314,15 +314,15 @@ static BOOL inNsSelect = 0;
 
 /* This is a piece of code which is common to all the event handling
    methods.  Maybe it should even be a function.  */
-#define EV_TRAILER(e)                                         \
-  {                                                           \
-  XSETFRAME (emacs_event->frame_or_window, emacsframe);       \
-  if (e) emacs_event->timestamp = EV_TIMESTAMP (e);           \
-  n_emacs_events_pending++;                                   \
-  kbd_buffer_store_event_hold (emacs_event, q_event_ptr);     \
-  EVENT_INIT (*emacs_event);                                  \
-  ns_send_appdefined (-1);                                    \
-  }
+#define EV_TRAILER(e)                                                   \
+    {                                                                   \
+      XSETFRAME (emacs_event->frame_or_window, emacsframe);             \
+      if (e) emacs_event->timestamp = EV_TIMESTAMP (e);                 \
+          n_emacs_events_pending++;                                     \
+          kbd_buffer_store_event_hold (emacs_event, q_event_ptr);       \
+      EVENT_INIT (*emacs_event);                                        \
+      ns_send_appdefined (-1);                                          \
+    }
 
 void x_set_cursor_type (struct frame *, Lisp_Object, Lisp_Object);
 
@@ -390,43 +390,43 @@ ns_init_paths ()
                                   [NSArray arrayWithObjects:
                                          @"site-lisp", @"lisp", @"leim", nil]];
       NSEnumerator *pathEnum = [paths objectEnumerator];
-      resourcePaths = @"";
+  resourcePaths = @"";
       while (resourcePath = [pathEnum nextObject])
-        {
-          if ([fileManager fileExistsAtPath: resourcePath isDirectory: &isDir])
-            if (isDir)
-              {
-                if ([resourcePaths length] > 0)
-                  resourcePaths
-		    = [resourcePaths stringByAppendingString: pathSeparator];
-                resourcePaths
-		  = [resourcePaths stringByAppendingString: resourcePath];
-              }
-        }
+    {
+      if ([fileManager fileExistsAtPath: resourcePath isDirectory: &isDir])
+        if (isDir)
+          {
+            if ([resourcePaths length] > 0)
+              resourcePaths
+                = [resourcePaths stringByAppendingString: pathSeparator];
+            resourcePaths
+              = [resourcePaths stringByAppendingString: resourcePath];
+          }
+    }
       if ([resourcePaths length] > 0)
         setenv ("EMACSLOADPATH", [resourcePaths UTF8String], 1);
 /*NSLog (@"loadPath: '%@'\n", resourcePaths); */
-    }
+}
 
   if (!getenv ("EMACSPATH"))
-    {
+{
       NSArray *paths = [binDir stringsByAppendingPaths:
                                   [NSArray arrayWithObjects: @"bin",
                                                              @"lib-exec", nil]];
-      NSEnumerator *pathEnum = [paths objectEnumerator];
-      resourcePaths = @"";
+  NSEnumerator *pathEnum = [paths objectEnumerator];
+  resourcePaths = @"";
       while (resourcePath = [pathEnum nextObject])
-        {
-          if ([fileManager fileExistsAtPath: resourcePath isDirectory: &isDir])
-            if (isDir)
-              {
-                if ([resourcePaths length] > 0)
-                  resourcePaths
-		    = [resourcePaths stringByAppendingString: pathSeparator];
-                resourcePaths
-		  = [resourcePaths stringByAppendingString: resourcePath];
-              }
-        }
+    {
+      if ([fileManager fileExistsAtPath: resourcePath isDirectory: &isDir])
+        if (isDir)
+          {
+            if ([resourcePaths length] > 0)
+              resourcePaths
+                = [resourcePaths stringByAppendingString: pathSeparator];
+            resourcePaths
+              = [resourcePaths stringByAppendingString: resourcePath];
+          }
+    }
       if ([resourcePaths length] > 0)
         setenv ("EMACSPATH", [resourcePaths UTF8String], 1);
     }
@@ -440,7 +440,7 @@ ns_init_paths ()
             setenv ("EMACSDATA", [resourcePath UTF8String], 1);
           if (!getenv ("EMACSDOC"))
             setenv ("EMACSDOC", [resourcePath UTF8String], 1);
-        }
+}
     }
 
   if (!getenv ("INFOPATH"))
@@ -574,7 +574,7 @@ ns_resize_handle_rect (NSWindow *window)
   r.origin.y = 0;
   r.size.width = r.size.height = RESIZE_HANDLE_SIZE;
   return r;
-}
+        }
 
 
 static int
@@ -985,8 +985,8 @@ ns_raise_frame (struct frame *f)
   FRAME_SAMPLE_VISIBILITY (f);
   if (FRAME_VISIBLE_P (f))
     {
-      [[view window] makeKeyAndOrderFront: NSApp];
-    }
+    [[view window] makeKeyAndOrderFront: NSApp];
+}
 
   UNBLOCK_INPUT;
 }
@@ -1077,8 +1077,8 @@ x_make_frame_visible (struct frame *f)
     {
       f->async_visible = 1;
       ns_raise_frame (f);
+        }
     }
-}
 
 
 void
@@ -1279,7 +1279,7 @@ x_set_window_size (struct frame *f, int change_grav, int cols, int rows)
 
   wr.size.width = pixelwidth + f->border_width;
   wr.size.height = pixelheight + FRAME_NS_TITLEBAR_HEIGHT (f)
-                  + FRAME_TOOLBAR_HEIGHT (f);
+      + FRAME_TOOLBAR_HEIGHT (f);
 
  /* We no longer constrain the frame to screen. 
     This didn't work for changes of X/Y position (starting with OS X 10.7),
@@ -1363,12 +1363,12 @@ ns_index_color (NSColor *color, struct frame *f)
   /* do we already have this color ? */
   {
     int i;
-    for (i = 1; i < color_table->avail; i++)
+  for (i = 1; i < color_table->avail; i++)
       {
-        if (color_table->colors[i] && [color_table->colors[i] isEqual: color])
+    if (color_table->colors[i] && [color_table->colors[i] isEqual: color])
           {
             [color_table->colors[i] retain];
-            return i;
+      return i;
           }
       }
   }
@@ -1410,13 +1410,13 @@ ns_free_indexed_color (unsigned long idx, struct frame *f)
   color_table = FRAME_NS_DISPLAY_INFO (f)->color_table;
 
   if (idx <= 0 || idx >= color_table->size) {
-    message1("ns_free_indexed_color: Color index out of range.\n");
+    message1 ("ns_free_indexed_color: Color index out of range.\n");
     return;
   }
 
   index = [NSNumber numberWithUnsignedInt: idx];
   if ([color_table->empty_indices containsObject: index]) {
-    message1("ns_free_indexed_color: attempt to free already freed color.\n");
+    message1 ("ns_free_indexed_color: attempt to free already freed color.\n");
     return;
   }
 
@@ -1881,7 +1881,7 @@ ns_frame_up_to_date (struct frame *f)
       struct ns_display_info *dpyinfo = FRAME_NS_DISPLAY_INFO (f);
       if ((dpyinfo->mouse_face_deferred_gc||f ==dpyinfo->mouse_face_mouse_frame)
       /*&& dpyinfo->mouse_face_mouse_frame*/)
-        {
+	{
           BLOCK_INPUT;
 	  if (ns_update_begin(f))
 	    {
@@ -1891,10 +1891,10 @@ ns_frame_up_to_date (struct frame *f)
                                   dpyinfo->mouse_face_mouse_y);
           dpyinfo->mouse_face_deferred_gc = 0;
 	  ns_update_end(f);
-	    }
+	}
           UNBLOCK_INPUT;
-        }
     }
+}
 }
 
 
@@ -2196,9 +2196,9 @@ ns_after_update_window_line (struct glyph_row *desired_row)
             - FRAME_INTERNAL_BORDER_WIDTH (f);
           ns_clear_frame_area (f, x1, y, width, height);
           ns_clear_frame_area (f, x2, y, width, height);
-        }
-      UNBLOCK_INPUT;
     }
+      UNBLOCK_INPUT;
+}
 }
 
 
@@ -2324,10 +2324,10 @@ ns_draw_fringe_bitmap (struct window *w, struct glyph_row *row,
       if (yAdjust)
         yIncr += FRAME_INTERNAL_BORDER_WIDTH (f);
       NSRect r = NSMakeRect (p->bx+xAdjust, p->by+yAdjust, p->nx, p->ny+yIncr);
-      NSRectClip (r);
-      [ns_lookup_indexed_color(face->background, f) set];
-      NSRectFill (r);
-    }
+          NSRectClip (r);
+          [ns_lookup_indexed_color (face->background, f) set];
+          NSRectFill (r);
+        }
 
   if (p->which)
     {
@@ -2342,7 +2342,7 @@ ns_draw_fringe_bitmap (struct window *w, struct glyph_row *row,
           int i;
           unsigned char *cbits = xmalloc (len);
 
-          for (i =0; i<len; i++)
+          for (i = 0; i < len; i++)
             cbits[i] = ~(bits[i] & 0xff);
           img = [[EmacsImage alloc] initFromXBM: cbits width: 8 height: p->h
                                            flip: NO];
@@ -2355,10 +2355,10 @@ ns_draw_fringe_bitmap (struct window *w, struct glyph_row *row,
          to erase the whole background. */
       [ns_lookup_indexed_color(face->background, f) set];
       NSRectFill (r);
-      pt.y += p->h;
+        pt.y += p->h;
       [img setXBMColor: ns_lookup_indexed_color(face->foreground, f)];
-      [img compositeToPoint: pt operation: NSCompositeSourceOver];
-    }
+        [img compositeToPoint: pt operation: NSCompositeSourceOver];
+      }
   ns_unfocus (f);
 }
 
@@ -2544,9 +2544,9 @@ ns_fix_rect_ibw (NSRect r, int fibw, int frame_pixel_width)
     {
       r.size.height += r.origin.y;
       r.origin.y = 0;
-    }
+}
   if (r.origin.x <= fibw+1)
-    {
+{
       r.size.width += r.origin.x;
       r.origin.x = 0;
     }
@@ -2573,9 +2573,9 @@ ns_get_glyph_string_clip_rect (struct glyph_string *s, NativeRectangle *nr)
       if (n == 2)
         *nr = ns_fix_rect_ibw (*(nr+1), FRAME_INTERNAL_BORDER_WIDTH (s->f),
                               FRAME_PIXEL_WIDTH (s->f));
-    }
+        }
   return n;
-}
+            }
 
 
 static void
@@ -2867,7 +2867,7 @@ ns_dumpglyphs_image (struct glyph_string *s, NSRect r)
   if (s->hl == DRAW_CURSOR)
       [FRAME_CURSOR_COLOR (s->f) set];
   else
-    [ns_lookup_indexed_color (NS_FACE_BACKGROUND (face), s->f) set];
+  [ns_lookup_indexed_color (NS_FACE_BACKGROUND (face), s->f) set];
 
   if (bg_height > s->slice.height || s->img->hmargin || s->img->vmargin
       || s->img->mask || s->img->pixmap == 0 || s->width != s->background_width)
@@ -2885,15 +2885,15 @@ ns_dumpglyphs_image (struct glyph_string *s, NSRect r)
     {
       int fibw = FRAME_INTERNAL_BORDER_WIDTH (s->f);
       if (br.origin.y <= fibw+1 + box_line_vwidth)
-        {
+    {
           br.size.height += br.origin.y;
           br.origin.y = 0;
-        }
+    }
       if (br.origin.x <= fibw+1 + box_line_vwidth)
-        {
+    {
           br.size.width += br.origin.x;
           br.origin.x = 0;
-        }
+    }
       if (FRAME_PIXEL_WIDTH (s->f) - (br.origin.x + br.size.width) <= fibw+1)
         br.size.width += fibw;
     }
@@ -2956,13 +2956,13 @@ ns_dumpglyphs_stretch (struct glyph_string *s)
       *r = NSMakeRect (s->x, s->y, s->background_width, s->height);
 
       for (i=0; i<n; i++)
-        {
+       {
           if (!s->row->full_width_p)
             {
               /* truncate to avoid overwriting fringe and/or scrollbar */
               int overrun = max (0, (s->x + s->background_width)
-                                  - (WINDOW_BOX_RIGHT_EDGE_X (s->w)
-                                    - WINDOW_RIGHT_FRINGE_WIDTH (s->w)));
+			     - (WINDOW_BOX_RIGHT_EDGE_X (s->w)
+				- WINDOW_RIGHT_FRINGE_WIDTH (s->w)));
               r[i].size.width -= overrun;
 
               /* XXX: Try to work between problem where a stretch glyph on
@@ -2993,12 +2993,12 @@ ns_dumpglyphs_stretch (struct glyph_string *s)
       ns_focus (s->f, r, n);
 
       if (s->hl == DRAW_MOUSE_FACE)
-       {
+            {
          face = FACE_FROM_ID
            (s->f, FRAME_NS_DISPLAY_INFO (s->f)->mouse_face_face_id);
          if (!face)
            face = FACE_FROM_ID (s->f, MOUSE_FACE_ID);
-       }
+            }
       else
        face = FACE_FROM_ID (s->f, s->first_glyph->face_id);
 
@@ -3179,11 +3179,22 @@ ns_send_appdefined (int value)
           fd_entry = nil;
         }
 
+
+      NSWindow *win = [NSApp mainWindow];
+      if (win == nil)
+      {
+	// if application hidden, try to get the first of all windows 
+	NSArray *a = [NSApp windows];
+	if ([a count]>0)
+	{
+	  win = [a objectAtIndex:0];
+	}
+      }
       nxev = [NSEvent otherEventWithType: NSApplicationDefined
                                 location: NSMakePoint (0, 0)
                            modifierFlags: 0
                                timestamp: 0
-                            windowNumber: [[NSApp mainWindow] windowNumber]
+                            windowNumber: [win windowNumber]
                                  context: [NSApp context]
                                  subtype: 0
                                    data1: value
@@ -3217,7 +3228,7 @@ ns_read_socket (struct terminal *terminal, int expected,
 #ifdef SYNC_INPUT
       pending_signals = 1;
 #endif
-      return -1;
+    return -1;
     }
 
   interrupt_input_pending = 0;
@@ -3305,11 +3316,11 @@ ns_select (int nfds, fd_set *readfds, fd_set *writefds,
 
   /* Save file descriptor set, which gets overwritten in calls to select ()
      Note, this is called from process.c, and only readfds is ever set */
-  if (readfds)
-    {
+      if (readfds)
+        {
       memcpy (&select_readfds, readfds, sizeof (fd_set));
       select_nfds = nfds;
-    }
+        }
   else
     select_nfds = 0;
 
@@ -3327,12 +3338,12 @@ ns_select (int nfds, fd_set *readfds, fd_set *writefds,
     /* set a timeout and run the main AppKit event loop while continuing
        to monitor the files */
   time = ((double) timeout->tv_sec) + ((double) timeout->tv_usec)/1000000.0;
-  timed_entry = [[NSTimer scheduledTimerWithTimeInterval: time
-                                           target: NSApp
+      timed_entry = [[NSTimer scheduledTimerWithTimeInterval: time
+                                                      target: NSApp
                                          selector: @selector (timeout_handler:)
-                                         userInfo: 0
+                                                    userInfo: 0
                                           repeats: YES] /* for safe removal */
-                                                         retain];
+                      retain];
 
   /* set a periodic task to try the select () again */
   fd_entry = [[NSTimer scheduledTimerWithTimeInterval: 0.1
@@ -3384,7 +3395,7 @@ ns_select (int nfds, fd_set *readfds, fd_set *writefds,
     }
   /* never reached, shut compiler up */
   return 0;
-}
+    }
 
 
 
@@ -3531,7 +3542,7 @@ ns_redeem_scroll_bar (struct window *window)
   NSTRACE (ns_redeem_scroll_bar);
   if (!NILP (window->vertical_scroll_bar))
     {
-      bar =XNS_SCROLL_BAR (window->vertical_scroll_bar);
+      bar = XNS_SCROLL_BAR (window->vertical_scroll_bar);
       [bar reprieve];
     }
 }
@@ -3897,16 +3908,16 @@ ns_term_init (Lisp_Object display_name)
 
   if (!ns_initialized)
     {
-      baud_rate = 38400;
-      Fset_input_interrupt_mode (Qnil);
+  baud_rate = 38400;
+  Fset_input_interrupt_mode (Qnil);
       ns_initialized = 1;
-    }
+        }
 
   ns_pending_files = [[NSMutableArray alloc] init];
   ns_pending_service_names = [[NSMutableArray alloc] init];
   ns_pending_service_args = [[NSMutableArray alloc] init];
 
-  /* Start app and create the main menu, window, view.
+/* Start app and create the main menu, window, view.
      Needs to be here because ns_initialize_display_info () uses AppKit classes.
      The view will then ask the NSApp to stop and return to Emacs. */
   [EmacsApp sharedApplication];
@@ -4151,11 +4162,11 @@ ns_term_init (Lisp_Object display_name)
     [NSApp setWindowsMenu: [[NSMenu alloc] init]];
 
     [[NSNotificationCenter defaultCenter] addObserver: mainMenu
-					     selector: @selector (trackingNotification:)
-                                             name: NSMenuDidBeginTrackingNotification object: mainMenu];
+         selector: @selector (trackingNotification:)
+             name: NSMenuDidBeginTrackingNotification object: mainMenu];
     [[NSNotificationCenter defaultCenter] addObserver: mainMenu
-					     selector: @selector (trackingNotification:)
-                                             name: NSMenuDidEndTrackingNotification object: mainMenu];
+         selector: @selector (trackingNotification:)
+             name: NSMenuDidEndTrackingNotification object: mainMenu];
   }
 #endif /* MAC OS X menu setup */
 
@@ -4781,7 +4792,7 @@ typedef void(*rwwi_compHand)(NSWindow *, NSError *);
 /*   Notification from the Workspace to open a file */
 - (BOOL)application: sender openFile: (NSString *)file
 {
-  [ns_pending_files addObject: file];
+    [ns_pending_files addObject: file];
   return YES;
 }
 
@@ -4789,7 +4800,7 @@ typedef void(*rwwi_compHand)(NSWindow *, NSError *);
 /*   Open a file as a temporary file */
 - (BOOL)application: sender openTempFile: (NSString *)file
 {
-  [ns_pending_files addObject: file];
+    [ns_pending_files addObject: file];
   return YES;
 }
 
@@ -4797,7 +4808,7 @@ typedef void(*rwwi_compHand)(NSWindow *, NSError *);
 /*   Notification from the Workspace to open a file noninteractively (?) */
 - (BOOL)application: sender openFileWithoutUI: (NSString *)file
 {
-  [ns_pending_files addObject: file];
+    [ns_pending_files addObject: file];
   return YES;
 }
 
@@ -4819,7 +4830,7 @@ typedef void(*rwwi_compHand)(NSWindow *, NSError *);
   NSEnumerator *files = [fileList objectEnumerator];
   NSString *file;
   while ((file = [files nextObject]) != nil)
-    [ns_pending_files addObject: file];
+      [ns_pending_files addObject: file];
 
 
 
@@ -4902,11 +4913,11 @@ typedef void(*rwwi_compHand)(NSWindow *, NSError *);
   result = select (select_nfds, &t_readfds, (SELECT_TYPE *)0, (SELECT_TYPE *)0,
                   &select_timeout);
   if (result)
-    {
+            {
       memcpy (&select_readfds, &t_readfds, sizeof (fd_set));
-      ns_send_appdefined (result);
-    }
-}
+                  ns_send_appdefined (result);
+                }
+            }
 
 
 
@@ -5314,8 +5325,8 @@ typedef void(*rwwi_compHand)(NSWindow *, NSError *);
             parse_solitary_modifier (ns_function_modifier);
 
       if (flags & NSRightAlternateKeyMask) /* default = meta */
-	{
-	  if ((NILP (ns_right_alternate_modifier)
+        {
+          if ((NILP (ns_right_alternate_modifier)
 	       || (EQ (ns_right_alternate_modifier, Qnone)
 		   && (NILP (ns_alternate_modifier) 
 		       || EQ (ns_alternate_modifier, Qnone)))))
@@ -5337,7 +5348,7 @@ typedef void(*rwwi_compHand)(NSWindow *, NSError *);
 		emacs_event->modifiers |= meta_modifier;
 	    }
 	  else
-	    emacs_event->modifiers |=
+            emacs_event->modifiers |=
 	      parse_solitary_modifier (EQ (ns_right_alternate_modifier, Qnone) ?
 				       ns_alternate_modifier
                : ns_right_alternate_modifier);
@@ -5367,7 +5378,7 @@ typedef void(*rwwi_compHand)(NSWindow *, NSError *);
 		}
           else
 		emacs_event->modifiers |= meta_modifier;
-	    }
+        }
 	  else
               emacs_event->modifiers |=
                 parse_solitary_modifier (ns_alternate_modifier);
@@ -5468,7 +5479,7 @@ typedef void(*rwwi_compHand)(NSWindow *, NSError *);
       /* TODO: still need this? */
       if (code == 0x2DC)
         code = '~'; /* 0x7E */
-      emacs_event->modifiers = 0;
+        emacs_event->modifiers = 0;
       emacs_event->kind
 	= code > 0xFF ? MULTIBYTE_CHAR_KEYSTROKE_EVENT : ASCII_KEYSTROKE_EVENT;
       emacs_event->code = code;
@@ -5891,11 +5902,11 @@ typedef void(*rwwi_compHand)(NSWindow *, NSError *);
 
 - (void)windowDidResize: (NSNotification *)notification
 {
-  NSWindow *theWindow = [notification object];
+      NSWindow *theWindow = [notification object];
   NSTRACE (windowDidResize);
 
 #ifdef NS_IMPL_GNUSTEP
-   /* in GNUstep, at least currently, it's possible to get a didResize
+   /* In GNUstep, at least currently, it's possible to get a didResize
       without getting a willResize.. therefore we need to act as if we got
       the willResize now */
   NSSize sz = [theWindow frame].size;
@@ -6109,7 +6120,7 @@ typedef void(*rwwi_compHand)(NSWindow *, NSError *);
   toggleButton = [win standardWindowButton: NSWindowToolbarButton];
   if (toggleButton)
     {
-      [toggleButton setTarget: self];
+  [toggleButton setTarget: self];
       [toggleButton setAction: @selector (toggleToolbarShown: )];
     }
 
@@ -6204,7 +6215,7 @@ typedef void(*rwwi_compHand)(NSWindow *, NSError *);
 
   if (abs (defaultFrame.size.height - result.size.height)
       > FRAME_LINE_HEIGHT (emacsframe))
-    {
+      {
       /* first click */
       ns_userRect = result;
       result.size.height = defaultFrame.size.height;
@@ -6214,10 +6225,10 @@ typedef void(*rwwi_compHand)(NSWindow *, NSError *);
     {
       if (abs (defaultFrame.size.width - result.size.width)
           > FRAME_COLUMN_WIDTH (emacsframe))
-        result = defaultFrame;  /* second click */
-      else
+      result = defaultFrame;  /* second click */
+  else
         result = ns_userRect.size.height ? ns_userRect : result;  /* restore */
-        }
+    }
 
   [self windowWillResize: sender toSize: result.size];
   return result;
@@ -6296,8 +6307,8 @@ typedef void(*rwwi_compHand)(NSWindow *, NSError *);
   if (context_menu_value == -1)
     context_menu_value = [sender tag];
   else
-    find_and_call_menu_selection (emacsframe, emacsframe->menu_bar_items_used,
-                                  emacsframe->menu_bar_vector,
+      find_and_call_menu_selection (emacsframe, emacsframe->menu_bar_items_used,
+                                    emacsframe->menu_bar_vector,
                                   (void *)[sender tag]);
   ns_send_appdefined (-1);
   return self;
@@ -6330,7 +6341,7 @@ typedef void(*rwwi_compHand)(NSWindow *, NSError *);
   emacs_event->kind = TOOL_BAR_EVENT;
 /*   XSETINT (emacs_event->code, 0); */
   emacs_event->arg = AREF (emacsframe->tool_bar_items,
-                          idx + TOOL_BAR_ITEM_KEY);
+			   idx + TOOL_BAR_ITEM_KEY);
   emacs_event->modifiers = EV_MODIFIERS (theEvent);
   EV_TRAILER (theEvent);
   return self;
@@ -6362,7 +6373,7 @@ typedef void(*rwwi_compHand)(NSWindow *, NSError *);
 - toggleFullScreen: (id)sender
 {
   if (!emacs_event)
-    return self;
+  return self;
 
   emacs_event->kind = NS_NONKEY_EVENT;
   emacs_event->code = KEY_NS_TOGGLE_FULLSCREEN;
@@ -6598,8 +6609,8 @@ typedef NSUInteger NSApplicationPresentationOptions;
        && (!typeSent || [typeSent isEqual:NSStringPboardType])) {
     //if (! NILP (XBUFFER ((EmacsWindow *) [FRAME_NS_VIEW (f) window])->mark_active))
     // if (! NILP (current_buffer->mark_active))
-      return self;
-  }
+        return self;
+    }
   return [super validRequestorForSendType: typeSent
                                returnType: typeReturned];
 }
@@ -6717,19 +6728,19 @@ extern Lisp_Object Vmark_even_if_inactive;
 }
 
 - (BOOL) respondsToNativeFullScreen
-{
+    {
   return (floor (NSAppKitVersionNumber) >= 1110); /*NSAppKitVersionNumber10_7*/
   /* the following won't work when older build environments are used */
   // return [super respondsToSelector:@selector(toggleFullScreen:)];
-}
+    }
 - (BOOL) shouldUseNativeFullScreen
-{
+    {
   return usingLionScreen;
 }
 
 
 - (void)toggleFullScreen: (id)sender
-{
+        {
   struct frame *f = ((EmacsView *) [self delegate])->emacsframe;
   [FRAME_NS_VIEW (f) toggleFullScreen: sender];
 }
@@ -6740,8 +6751,8 @@ extern Lisp_Object Vmark_even_if_inactive;
       usingLionScreen = ! ([self isFullScreen]);
 
       [super toggleFullScreen: sender];
+        }
     }
-}
 
 
 enum {
@@ -6749,9 +6760,9 @@ enum {
 };
 
 - (BOOL)isFullScreen
-{
+    {
     return (([self styleMask] & __NSFullScreenWindowMask) == __NSFullScreenWindowMask);
-}
+        }
 
 
 /* NOTE: this is not the new, native fullscreen.  Only called for
@@ -6769,17 +6780,17 @@ enum {
     f = (EmacsFullWindow *)self;
     w = [f getNormalWindow];
     if (! flag)
-      {
+        {
 	[w setContentView:[f contentView]];
 	[w makeKeyAndOrderFront:nil];
 	[f close];
 	if ([[self screen] isEqual:[[NSScreen screens] objectAtIndex:0]]) {
 	  if ([NSApp respondsToSelector:@selector(setPresentationOptions:)]) {
 	    [NSApp setPresentationOptions:NSApplicationPresentationDefault];
-	  }
+        }
 	  else {
 	    [NSMenu setMenuBarVisible:YES];
-	  }
+    }
 	}
       }
     return w;
@@ -6787,17 +6798,17 @@ enum {
   else if (flag && ! isFullscreen)
     {
       [self deminiaturize:nil];
-      
+
       if ([[self screen] isEqual:[[NSScreen screens] objectAtIndex:0]]) {
 	if ([NSApp respondsToSelector:@selector(setPresentationOptions:)]) {
 	  [NSApp setPresentationOptions:NSApplicationPresentationAutoHideDock 
 		 | NSApplicationPresentationAutoHideMenuBar];
-	}
+}
 	else {
 	  [NSMenu setMenuBarVisible:NO];
 	}
       }
-      
+
       [self orderOut:nil];
 
       f = [[EmacsFullWindow alloc] initWithNormalWindow:self];
@@ -6838,7 +6849,7 @@ enum {
 {
   if (ns_in_resize)
     {
-      struct frame *f = ((EmacsView *)[self delegate])->emacsframe;
+  struct frame *f = ((EmacsView *)[self delegate])->emacsframe;
       ns_in_resize = NO;
       [self display];
       ns_send_appdefined (-1);
@@ -6850,7 +6861,7 @@ enum {
 
 /* send resize events */
 - (void)mouseDragged: (NSEvent *)theEvent
-{
+    {
   if (ns_in_resize)
     {
       NSPoint p = [theEvent locationInWindow];
@@ -6868,7 +6879,7 @@ enum {
       [[NSNotificationCenter defaultCenter]
             postNotificationName: NSWindowDidResizeNotification
                           object: self];
-    }
+}
     }
   else
     [super mouseDragged: theEvent];
@@ -6880,7 +6891,7 @@ enum {
 @implementation EmacsFullWindow
 
 -(BOOL)canBecomeKeyWindow {
-    return YES;
+  return YES;
 }
 
 -(id)initWithNormalWindow:(EmacsWindow *)window {
@@ -6892,7 +6903,7 @@ enum {
         normalWindow = window;
         [self setAcceptsMouseMovedEvents: YES];
         [self useOptimizedDrawing: YES];
-    }
+}
     return self;
 }
 
@@ -7054,7 +7065,7 @@ enum {
   em_whole = whole;
 
   if (portion >= whole)
-    [self setFloatValue: 0.0 knobProportion: 1.0];
+      [self setFloatValue: 0.0 knobProportion: 1.0];
   else
     {
       float pos, por;
@@ -7097,8 +7108,8 @@ enum {
   XSETINT (emacs_event->x, loc * pixel_height);
   XSETINT (emacs_event->y, pixel_height-20);
 
-  n_emacs_events_pending++;
-  kbd_buffer_store_event_hold (emacs_event, q_event_ptr);
+      n_emacs_events_pending++;
+      kbd_buffer_store_event_hold (emacs_event, q_event_ptr);
   EVENT_INIT (*emacs_event);
   ns_send_appdefined (-1);
 }
