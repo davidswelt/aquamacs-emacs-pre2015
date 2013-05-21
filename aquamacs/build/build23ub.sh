@@ -33,13 +33,14 @@ XC_PPC_OPT='-fdefer-pop -fguess-branch-probability -fcprop-registers   -fif-conv
 
 
 
-architectures="ppc i386"
+architectures="i386"
 
+# defaults
 i386_CC='gcc'
 i386_CFLAGS="-O3 -fno-tree-pre -falign-loops -g -arch i386"
 i386_LDFLAGS="-O3 -fno-tree-pre -falign-loops -g -arch i386"
 
-ppc_CC='gcc-4.0'
+ppc_CC='gcc'
 ppc_CFLAGS="$XC_PPC_OPT -arch ppc"
 ppc_LDFLAGS="$XC_PPC_OPT -arch ppc"
 
