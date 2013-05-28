@@ -13,6 +13,12 @@ AQUAMACS_ROOT=`pwd`/aquamacs
 PATH=/opt/local/bin:/usr/local/bin:/usr/local/git/bin:$PATH
 LOG=`pwd`/aquamacs-build.log
 
+BPARM=$1
+
+if [ -z "$BPARM" ];
+   BPARM=-nightly
+fi
+
 rm $LOG
 echo "Begin building Aquamacs." >>$LOG
 date >>$LOG
@@ -47,7 +53,7 @@ DATE=`date +"%Y-%b-%d-%a-%H%M"`
 BLD=`pwd`/builds/Aquamacs-${DATE}.tar.bz2
 
 # one step builds on the next:
-aquamacs/build/build23ub.sh -nightly >>$LOG 2>>$LOG ; \
+aquamacs/build/build23ub.sh $BPARM >>$LOG 2>>$LOG ; \
 date >>$LOG ; \
 echo "Packaging Aquamacs." >>$LOG ; \
 mkdir builds 2>/dev/null ; \
