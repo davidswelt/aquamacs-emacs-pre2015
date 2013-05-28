@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # for internal use only
 
@@ -15,8 +15,9 @@ LOG=`pwd`/aquamacs-build.log
 
 BPARM=$1
 
-if [ -z "$BPARM" ];
-   BPARM=-nightly
+if [ -z "$BPARM" ]
+then
+   BPARM="-nightly"
 fi
 
 rm $LOG
