@@ -37,7 +37,7 @@
 
 ;; Version information
 
-(defvar aquamacs-version "2.5"
+(defvar aquamacs-version "2.5rc"
 "A string with Aquamacs' version number.
 The format of the string is undefined. 
 For a reliable numerical representation, use `aquamacs-version-id'.")
@@ -48,7 +48,7 @@ It is guaranteed that for any two Aquamacs releases A and B,
 if aquamacs-version-id for B is higher than aquamacs-version-id 
 for A, then B is newer than A.")
 
-(defvar aquamacs-minor-version ""
+(defvar aquamacs-minor-version "rc1"
 "Version code for minor maintenance releases.
 Changes in this code are ignored during the online version check.")
 
