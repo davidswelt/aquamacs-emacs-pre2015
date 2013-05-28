@@ -96,16 +96,21 @@ nil  )
 (setq url-show-status nil) ;;don't annoy user
 ;; (setq aquamacs-version "1.4rc2")
 ;; (setq aquamacs-version-id 142) ;; for test purposes
+;; (aquamacs-compare-version 'gui)
 (defun aquamacs-compare-version (&optional interactive-request)
   (if aquamacs-version-check-buffer ;; just for safety
       (save-excursion 
 	(set-buffer aquamacs-version-check-buffer)
- 
+
 	(let ((server-version) (server-version-id) (server-minor-version) 
 	      (server-version-qualifier) (server-version-url)
 	      (beta-str (if (> aquamacs-user-likes-beta 0) "beta-" "") ))
 
 	  (setq server-version (aquamacs-version--read-xml-tag (concat beta-str "version")))
+	  (when (null server-version)
+	    (setq beta-str "")
+	    (setq server-version (aquamacs-version--read-xml-tag (concat beta-str "version"))))
+
 	  (setq server-minor-version (aquamacs-version--read-xml-tag (concat beta-str "minor-version")))
 	  (setq server-version-id
 		(string-to-number (or (aquamacs-version--read-xml-tag (concat beta-str "version-id")) "")))
@@ -284,6 +289,7 @@ transfered data."
     
 ;; "&afpf=" (if aquamacs-auto-frame-parameters-flag "1" "0")
 ;; "&sfpm=" (if smart-frame-positioning-mode "1" "0")
+;; (aquamacs-check-for-updates-internal 0 1 t)
 
 (defun aquamacs-check-for-updates-internal (session-id calls &optional interactively)
     (when aquamacs-version-check-url
