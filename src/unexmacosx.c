@@ -1232,6 +1232,12 @@ dump_it ()
 #endif
 #ifdef LC_FUNCTION_STARTS
       case LC_FUNCTION_STARTS:
+#ifdef LC_DATA_IN_CODE
+      case LC_DATA_IN_CODE:
+#endif
+#ifdef LC_DYLIB_CODE_SIGN_DRS
+      case LC_DYLIB_CODE_SIGN_DRS:
+#endif
 	copy_linkedit_data (lca[i], linkedit_delta);
 	break;
 #endif
