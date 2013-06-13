@@ -44,10 +44,10 @@ echo "Building Aquamacs documentation." >>$LOG
 # update documentation: requires latex (tetex with nonfreefonts package)
 
 (   cd aquamacs/doc/latex ; \
- PATH=/usr/texbin/:/usr/local/bin/:$PATH make 2>>../../../$LOG ; \
+ PATH=/usr/texbin/:/usr/local/bin/:$PATH make 2>>$LOG ; \
  cd - )
 
-echo "Building Aquamacs (incremental build)." >>$LOG
+echo "Building Aquamacs." >>$LOG
 
 APP=`pwd`/nextstep/Aquamacs.app
 DATE=`date +"%Y-%b-%d-%a-%H%M"`
