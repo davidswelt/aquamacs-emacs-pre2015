@@ -10,7 +10,7 @@ $PROJECT_DIR = '/Users/dr/Projects/Aquamacs';
 $REPO_DIR = '/Users/dr/ae.git';
 
 $BINARY = '/Applications/Aquamacs.app';
-
+$BINARY = $ARGV[0] if ($ARGV[0]);
 
 $DMG = "$PROJECT_DIR/AquamacsInstall.dmg";
 $RELEASE_NOTES = "$REPO_DIR/aquamacs/doc/latex/changes.pdf";
@@ -43,7 +43,7 @@ if ($VOL =~ /\/Volumes\/Aquam/i)
 
 &sys("rm -rf \"$VOL/Aquamacs.app\"");
  
-&sys("cd \"$BINARY\"; $REPO_DIR . "/aquamacs/build/sign");
+&sys("cd \"$BINARY\"; ${REPO_DIR}/aquamacs/build/sign");
 
 &sys("cp  -pR \"$BINARY\" \"$VOL/\"");
   } else 
