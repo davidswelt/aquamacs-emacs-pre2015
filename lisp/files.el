@@ -4545,7 +4545,7 @@ change the additional actions you can take on files."
                       (setq queried t)
 		      (with-current-buffer buffer
 			(select-window (get-window-for-other-buffer))
-			  (if (and (boundp 'tabbar-mode) tabbar-mode)
+			  (if (and (boundp 'tabbar-mode) tabbar-mode (boundp 'switch-to-buffer-in-tab))
 			      (switch-to-buffer-in-tab buffer)
 			    (switch-to-buffer buffer))
 			  (select-frame-set-input-focus (window-frame (selected-window)))

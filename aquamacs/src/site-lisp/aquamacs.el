@@ -108,7 +108,7 @@ automatically choosing a major mode, use \\[find-file-literally]."
 
   (let ((value (find-file-noselect filename nil nil wildcards)))
 
-    (if tabbar-mode
+    (if (and tabbar-mode (functionp 'switch-to-buffer-in-tab))
 	(if (listp value)
 	    (mapcar 'switch-to-buffer-in-tab (nreverse value))
 	  (switch-to-buffer-in-tab value))
