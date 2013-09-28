@@ -4,6 +4,8 @@
 <dict>
     <key>Label</key>
     <string>org.aquamacs.nightly23</string>
+    <key>UserName</key>
+    <string>dr</string>
     <key>ProgramArguments</key>
     <array>
         <string>/Users/dr/Nightly/Cocoa23ub/nightly-build.sh</string>
