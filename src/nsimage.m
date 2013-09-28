@@ -433,7 +433,7 @@ static EmacsImage *ImageList = nil;
   NSColor *rgbColor;
 
   if (bmRep == nil || color == nil)
-    return;
+    return self;
 
   if ([color colorSpaceName] != NSCalibratedRGBColorSpace)
     rgbColor = [color colorUsingColorSpaceName: NSCalibratedRGBColorSpace];
@@ -458,6 +458,7 @@ static EmacsImage *ImageList = nil;
           planes[2][i] = bb;
         }
   }
+  return self;
 }
 
 
