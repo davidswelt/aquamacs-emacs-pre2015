@@ -6385,8 +6385,8 @@ typedef void(*rwwi_compHand)(NSWindow *, NSError *);
 }
 
 #define __NSApplicationPresentationAutoHideToolbar  (1 << 11)
-/* for OS X 10.5 build compatibility */
-typedef NSUInteger NSApplicationPresentationOptions;
+/* for OS X 10.5 build compatibility [not compatible with post-10.8]*/
+/* typedef NSUInteger NSApplicationPresentationOptions; */
 
 - (NSApplicationPresentationOptions)window:(NSWindow *)window willUseFullScreenPresentationOptions:(NSApplicationPresentationOptions)proposedOptions {
     return proposedOptions | __NSApplicationPresentationAutoHideToolbar;
