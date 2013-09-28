@@ -5012,8 +5012,9 @@ typedef void(*rwwi_compHand)(NSWindow *, NSError *);
   if (!emacs_event)
     return;
 
-  if (newFont = [sender convertFont:
-                           ((struct nsfont_info *)face->font)->nsfont])
+  newFont = [sender convertFont:
+		      ((struct nsfont_info *)face->font)->nsfont];
+  if (newFont)
     {
       SET_FRAME_GARBAGED (emacsframe); /* now needed as of 2008/10 */
 
