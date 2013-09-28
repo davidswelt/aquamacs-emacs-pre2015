@@ -62,7 +62,7 @@ along with GNU Emacs.  If not, see <http://www.gnu.org/licenses/>.  */
 
 @class EmacsToolbar;
 
-@interface EmacsView : NSView <NSTextInput> /* 10.6+: NSWindowDelegate */
+@interface EmacsView : NSView <NSTextInput, NSWindowDelegate> /* NSWindowDelegate: 10.6 only.*/
    {
    char *old_title;
    BOOL windowClosing;

@@ -5586,9 +5586,9 @@ typedef void(*rwwi_compHand)(NSWindow *, NSError *);
 }
 
 
-- (long)conversationIdentifier
+- (NSInteger)conversationIdentifier
 {
-  return (long)self;
+  return (NSInteger)self;
 }
 
 
@@ -6105,7 +6105,7 @@ typedef void(*rwwi_compHand)(NSWindow *, NSError *);
 
   tem = f->name;
   name = [NSString stringWithUTF8String:
-                   NILP (tem) ? (unsigned char *)"Aquamacs" : SDATA (tem)];
+                   NILP (tem) ? (const char *)"Aquamacs" : SDATA (tem)];
   [win setTitle: name];
 
   /* toolbar support */
@@ -6486,7 +6486,7 @@ typedef void(*rwwi_compHand)(NSWindow *, NSError *);
   NSTRACE (performDragOperation);
 
   if (!emacs_event)
-    return;
+    return NO;
 
   position = [self convertPoint: [sender draggingLocation] fromView: nil];
   x = lrint (position.x);  y = lrint (position.y);
