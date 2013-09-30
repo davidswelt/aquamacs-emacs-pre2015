@@ -1295,7 +1295,7 @@ nsfont_draw (struct glyph_string *s, int from, int to, int x, int y,
       }
 
     CGContextRestoreGState (gcontext);
-    return;
+    return 0;
   }
 #endif  /* NS_IMPL_COCOA */
 
