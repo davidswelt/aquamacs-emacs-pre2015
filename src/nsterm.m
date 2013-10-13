@@ -1160,6 +1160,7 @@ x_destroy_window (struct frame *f)
     }
 
   xfree (f->output_data.ns);
+  f->output_data.ns = 0;
 
   [[view window] close];
   [view release];
@@ -6411,6 +6412,10 @@ typedef void(*rwwi_compHand)(NSWindow *, NSError *);
 }
 
 - (void)windowDidExitFullScreen:(NSNotification *)notification {
+
+
+  if (!emacsframe || !emacsframe->output_data.ns || ns_in_resize || ! FRAME_LIVE_P (emacsframe))
+    return;
  
    NSWindow* window = [notification object];
 
