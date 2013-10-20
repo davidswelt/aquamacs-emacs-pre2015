@@ -145,8 +145,8 @@ Lisp_Object empty_unibyte_string, empty_multibyte_string;
 Lisp_Object Vpath_separator;
 
 /* Set nonzero after Emacs has started up the first time.
-  Prevents reinitialization of the Lisp world and keymaps
-  on subsequent starts.  */
+   Prevents reinitialization of the Lisp world and keymaps
+   on subsequent starts.  */
 int initialized;
 
 #ifdef DOUG_LEA_MALLOC
@@ -198,7 +198,7 @@ int running_asynch_code;
 extern int inherited_pgroup;
 #endif
 
-#if defined(HAVE_X_WINDOWS) || defined(HAVE_NS)
+#if defined (HAVE_X_WINDOWS) || defined (HAVE_NS)
 /* If non-zero, -d was specified, meaning we're using some window system.  */
 int display_arg;
 #endif
@@ -408,7 +408,7 @@ fatal_error_signal (sig)
 SIGTYPE
 memory_warning_signal (sig)
      int sig;
-{
+  {
   signal (sig, memory_warning_signal);
   SIGNAL_THREAD_CHECK (sig);
 
@@ -416,7 +416,7 @@ memory_warning_signal (sig)
 
   /* It might be unsafe to call do_auto_save now.  */
   force_auto_save_soon ();
-}
+  }
 #endif
 
 /* We define abort, rather than using it from the library,
@@ -433,7 +433,7 @@ abort ()
   exit (1);
 }
 #endif
-
+
 
 /* Code for dealing with Lisp access to the Unix command line.  */
 
@@ -850,31 +850,31 @@ main (int argc, char **argv)
          So ignore --version otherwise.  */
       && initialized)
     {
-      Lisp_Object tem, tem2;
-      tem = Fsymbol_value (intern_c_string ("emacs-version"));
-      tem2 = Fsymbol_value (intern_c_string ("emacs-copyright"));
-      if (!STRINGP (tem))
-	{
-	  fprintf (stderr, "Invalid value of `emacs-version'\n");
-	  exit (1);
-	}
-      if (!STRINGP (tem2))
-	{
-	  fprintf (stderr, "Invalid value of `emacs-copyright'\n");
-	  exit (1);
-	}
-      else
-	{
+	  Lisp_Object tem, tem2;
+	  tem = Fsymbol_value (intern_c_string ("emacs-version"));
+	  tem2 = Fsymbol_value (intern_c_string ("emacs-copyright"));
+	  if (!STRINGP (tem))
+	    {
+	      fprintf (stderr, "Invalid value of `emacs-version'\n");
+	      exit (1);
+	    }
+	  if (!STRINGP (tem2))
+	    {
+	      fprintf (stderr, "Invalid value of `emacs-copyright'\n");
+	      exit (1);
+	    }
+	  else
+	    {
 	  printf ("GNU Emacs %s\n", SDATA (tem));
 	  printf ("%s\n", SDATA(tem2));
-	  printf ("GNU Emacs comes with ABSOLUTELY NO WARRANTY.\n");
-	  printf ("You may redistribute copies of Emacs\n");
-	  printf ("under the terms of the GNU General Public License.\n");
-	  printf ("For more information about these matters, ");
-	  printf ("see the file named COPYING.\n");
-	  exit (0);
-	}
+      printf ("GNU Emacs comes with ABSOLUTELY NO WARRANTY.\n");
+      printf ("You may redistribute copies of Emacs\n");
+      printf ("under the terms of the GNU General Public License.\n");
+      printf ("For more information about these matters, ");
+      printf ("see the file named COPYING.\n");
+      exit (0);
     }
+      }
 
 #ifdef HAVE_PERSONALITY_LINUX32
   if (!initialized
@@ -940,7 +940,7 @@ main (int argc, char **argv)
        stack allocation routine for new process that the allocation
        fails if stack limit is not on page boundary.  So, round up the
        new limit to page boundary.  */
-      newlim = (newlim + getpagesize () - 1) / getpagesize () * getpagesize();
+      newlim = (newlim + getpagesize () - 1) / getpagesize () * getpagesize ();
 #endif
       if (newlim > rlim.rlim_max)
 	{
@@ -1218,7 +1218,7 @@ Using an Emacs configured with --with-x-toolkit=lucid does not have this problem
       fcntl (daemon_pipe[1], F_SETFD, FD_CLOEXEC);
 
 #ifdef HAVE_SETSID
-      setsid();
+      setsid ();
 #endif
 #else /* DOS_NT */
       fprintf (stderr, "This platform does not support the -daemon flag.\n");
@@ -1237,13 +1237,13 @@ Using an Emacs configured with --with-x-toolkit=lucid does not have this problem
 #else
 #if defined (USG5) && defined (INTERRUPT_INPUT)
       setpgrp ();
-#endif
+# endif
 #endif
 #if defined (HAVE_GTK_AND_PTHREAD) && !defined (SYSTEM_MALLOC) && !defined (DOUG_LEA_MALLOC)
       {
 	extern void malloc_enable_thread P_ ((void));
 
-	malloc_enable_thread ();
+    malloc_enable_thread ();
       }
 #endif
     }
@@ -1350,7 +1350,7 @@ Using an Emacs configured with --with-x-toolkit=lucid does not have this problem
 
   noninteractive1 = noninteractive;
 
-/* Perform basic initializations (not merely interning symbols).  */
+  /* Perform basic initializations (not merely interning symbols).  */
 
   if (!initialized)
     {
@@ -1395,7 +1395,7 @@ Using an Emacs configured with --with-x-toolkit=lucid does not have this problem
 
       init_window_once ();	/* Init the window system.  */
 #ifdef HAVE_WINDOW_SYSTEM
-      init_fringe_once ();	/* Swap bitmaps if necessary. */
+      init_fringe_once ();	/* Swap bitmaps if necessary.  */
 #endif /* HAVE_WINDOW_SYSTEM */
     }
 
@@ -1486,14 +1486,19 @@ Using an Emacs configured with --with-x-toolkit=lucid does not have this problem
   if (!noninteractive)
     {
 #ifdef NS_IMPL_COCOA
-      if (skip_args < argc)
+      /* Started from GUI? */
+      /* FIXME: Do the right thing if getenv returns NULL, or if
+         chdir fails.  */
+      if (! inhibit_window_system && ! isatty (0))
+        chdir (getenv ("HOME"));
+      else if (skip_args < argc)
         {
-          if (!strncmp(argv[skip_args], "-psn", 4))
+          if (!strncmp (argv[skip_args], "-psn", 4))
             {
               skip_args += 1;
               chdir (getenv ("HOME"));
             }
-          else if (skip_args+1 < argc && !strncmp(argv[skip_args+1], "-psn", 4))
+          else if (skip_args+1 < argc && !strncmp (argv[skip_args+1], "-psn", 4))
             {
               skip_args += 2;
               chdir (getenv ("HOME"));
@@ -1542,8 +1547,8 @@ Using an Emacs configured with --with-x-toolkit=lucid does not have this problem
 	for (j = count_before + 2; j <argc; j++)
 	  new[j + 1] = argv[j];
 	argv = new;
-	argc++;
-      }
+	    argc++;
+	  }
     /* Change --display to -d, when its arg is separate.  */
     else if (displayname != 0 && skip_args > count_before
 	     && argv[count_before + 1][1] == '-')
@@ -1585,7 +1590,7 @@ Using an Emacs configured with --with-x-toolkit=lucid does not have this problem
   /* egetenv is a pretty low-level facility, which may get called in
      many circumstances; it seems flimsy to put off initializing it
      until calling init_callproc.  */
-  set_initial_environment ();
+    set_initial_environment ();
   /* AIX crashes are reported in system versions 3.2.3 and 3.2.4
      if this is not done.  Do it after set_global_environment so that we
      don't pollute Vglobal_environment.  */
@@ -1760,7 +1765,7 @@ Using an Emacs configured with --with-x-toolkit=lucid does not have this problem
 #endif
   init_window ();
   init_font ();
-  
+
   if (!initialized)
     {
       char *file;
@@ -1798,7 +1803,7 @@ Using an Emacs configured with --with-x-toolkit=lucid does not have this problem
      GNU/Linux and MinGW.  It might work on some other systems too.
      Give it a try and tell us if it works on your system.  To compile
      for profiling, use the configure option --enable-profiling.  */
-#if defined (__FreeBSD__) || defined (GNU_LINUX) || defined(__MINGW32__)
+#if defined (__FreeBSD__) || defined (GNU_LINUX) || defined (__MINGW32__)
 #ifdef PROFILING
   if (initialized)
     {
@@ -2188,8 +2193,8 @@ shut_down_emacs (sig, no_x, stuff)
 	reset_all_sys_modes ();
 	if (sig && sig != SIGTERM)
 	  fprintf (stderr, "Fatal error (%d)", sig);
+	  }
       }
-  }
 #else
   fflush (stdout);
   reset_all_sys_modes ();
@@ -2280,7 +2285,7 @@ This function exists on systems that use HAVE_SHM.  */)
 
   return Qnil;
 }
-
+
 #else /* not HAVE_SHM */
 
 DEFUN ("dump-emacs", Fdump_emacs, Sdump_emacs, 2, 2, 0,
@@ -2349,7 +2354,7 @@ You must run Emacs in batch mode in order to dump it.  */)
 #ifndef WINDOWSNT
   /* On Windows, this was done before dumping, and that once suffices.
      Meanwhile, my_edata is not valid on Windows.  */
-  memory_warnings (my_edata, malloc_warning);
+    memory_warnings (my_edata, malloc_warning);
 #endif /* not WINDOWSNT */
 #endif
 #if !defined (SYSTEM_MALLOC) && defined (HAVE_GTK_AND_PTHREAD) && !defined SYNC_INPUT
@@ -2449,7 +2454,7 @@ decode_env_path (evarname, defalt)
   else
     path = 0;
   if (!path)
-    path = defalt;
+      path = defalt;
 #ifdef DOS_NT
   /* Ensure values from the environment use the proper directory separator.  */
   if (path)
