@@ -8,7 +8,7 @@ cd ~/Nightly/Cocoa23ub/aquamacs-emacs.git
 
 DSYM_ROOT=~/Aquamacs.dSYM.archive
 
-BRANCH=master
+BRANCH=aquamacs2
 EMACS_ROOT=`pwd`
 AQUAMACS_ROOT=`pwd`/aquamacs
 # find git:
