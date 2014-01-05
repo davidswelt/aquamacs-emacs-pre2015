@@ -127,7 +127,7 @@ check_ns (void)
 /* Nonzero if we can use mouse menus. */
 int
 have_menus_p ()
-{
+    {
   return NSApp != nil;
 }
 
@@ -188,7 +188,7 @@ check_ns_display_info (Lisp_Object frame)
       if (! FRAME_NS_P (f))
         error ("non-Nextstep frame used");
       return FRAME_NS_DISPLAY_INFO (f);
-    }
+}
   return NULL;  /* shut compiler up */
 }
 
@@ -256,7 +256,7 @@ ns_display_info_for_name (name)
       Lisp_Object tem;
       tem = Fstring_equal (XCAR (XCAR (names)), name);
       if (!NILP (tem))
-        return dpyinfo;
+      return dpyinfo;
     }
 
   error ("Emacs for OpenStep does not yet support multi-display.");
@@ -900,7 +900,7 @@ x_set_cursor_type (f, arg, oldval)
   /* Make sure the cursor gets redrawn.  */
   cursor_type_changed = 1;
 }
-
+
 
 /* called to set mouse pointer color, but all other terms use it to
    initialize pointer types (and don't set the color ;) */
@@ -921,7 +921,7 @@ ns_appkit_version_str ()
 
 #ifdef NS_IMPL_GNUSTEP
   sprintf(tmp, "gnustep-gui-%s", Xstr(GNUSTEP_GUI_VERSION));
-#elif defined(NS_IMPL_COCOA)
+#elif defined (NS_IMPL_COCOA)
   sprintf(tmp, "apple-appkit-%.2f", NSAppKitVersionNumber);
 #else
   tmp = "ns-unknown";
@@ -938,7 +938,7 @@ ns_appkit_version_int ()
 {
 #ifdef NS_IMPL_GNUSTEP
   return GNUSTEP_GUI_MAJOR_VERSION * 100 + GNUSTEP_GUI_MINOR_VERSION;
-#elif defined(NS_IMPL_COCOA)
+#elif defined (NS_IMPL_COCOA)
   return (int)NSAppKitVersionNumber;
 #endif
   return 0;
@@ -1356,7 +1356,7 @@ arg nil means cycle forwards.  */)
      (arg)
      Lisp_Object arg;
 {
-  [NSApp _cycleWindowsReversed:(NILP(arg) ? FALSE : TRUE)];
+    [NSApp _cycleWindowsReversed:(NILP(arg) ? FALSE : TRUE)];
   return Qnil;
 }
 
@@ -1782,7 +1782,7 @@ DEFUN ("ns-popup-font-panel", Fns_popup_font_panel, Sns_popup_font_panel,
       CHECK_FRAME (frame);
       f = XFRAME (frame);
     }
-
+ 
   if (! NILP (face))
     {
       int face_id = lookup_named_face (f, face, 1);
@@ -1991,11 +1991,11 @@ when `ns-popup-save-panel' was called.
 		  modalDelegate:NSApp // it's EmacsApp
 		 didEndSelector:@selector(savePanelDidEnd2:returnCode:contextInfo:)
 		    contextInfo:current_buffer];
-  
+
   ns_update_menubar (SELECTED_FRAME (), 0, nil);
- 
+
   [panel release];
- 
+  
   /* make stick */
   // [NSApp setMainMenu: panelMenu];
 
@@ -2067,7 +2067,7 @@ Optional arg INIT, if non-nil, provides a default file name to use.  */)
 
   ret = (ret == NSOKButton) || panelOK;
 
-  if (ret) 
+  if (ret)
     fname = build_string ([[panel filename] UTF8String]);
 
   [[FRAME_NS_VIEW (SELECTED_FRAME ()) window] makeKeyWindow];
@@ -2717,7 +2717,7 @@ In case the execution fails, an error is signaled. */)
 
   [NSApp postEvent: nxev atStart: NO];
     [NSApp run];
-  
+
   status = as_status;
   as_status = 0;
   as_script = nil;
@@ -3160,7 +3160,7 @@ DEFUN ("x-display-grayscale-p", Fx_display_grayscale_p,
 Note that color displays do support shades of gray.
 The optional argument DISPLAY specifies which display to ask about.
 DISPLAY should be either a frame, a display name (a string), or terminal ID.
-If omitted or nil, that stands for the selected frame's display. */)
+If omitted or nil, that stands for the selected frame's display.  */)
      (display)
      Lisp_Object display;
 {
@@ -3327,7 +3327,7 @@ compute_tip_xy (f, parms, dx, dy, width, height, root_x, root_y)
   else
     /* Put it on the top.  */
 	*root_y = vScreen.origin.y + vScreen.size.height - height;
-    }
+}
 
 
 DEFUN ("x-show-tip", Fx_show_tip, Sx_show_tip, 1, 6, 0,
